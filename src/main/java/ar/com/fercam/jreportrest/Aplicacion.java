@@ -19,7 +19,7 @@ public class Aplicacion {
     private static void leerArchivoProperties() throws IOException {
         props = new Properties();
         ClassLoader loader = Thread.currentThread().getContextClassLoader();
-        try ( InputStream stream = loader.getResourceAsStream("./application.properties")) {
+        try ( InputStream stream = loader.getResourceAsStream("application.properties")) {
             props.load(stream);
         }
     }
@@ -44,8 +44,11 @@ public class Aplicacion {
         }
     }
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException, SQLException {
         leerArchivoProperties();
+        try(Connection c = getConexion()){
+            System.out.println("La conexion a la base de datos fue exitosa");
+        }
         Spark.port(getPuerto());
         Spark.post("/reporte/:nombre", new ProcesadorReportes());
     }
