@@ -50,6 +50,7 @@ public class Aplicacion {
             System.out.println("La conexion a la base de datos fue exitosa");
         }
         Spark.port(getPuerto());
+        Spark.options("*", (rq,rs)->"");
         Spark.before("*", new FiltroCors());
         Spark.post("/reporte/:nombre", new ProcesadorReportes());
     }
